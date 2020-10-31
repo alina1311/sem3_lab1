@@ -33,6 +33,16 @@ public:
         }
     }
 
+    LinkedList(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            T value = T();
+
+            prepend(value);
+        }
+    }
+
     LinkedList(const LinkedList& list)
     {
         this->head = nullptr;
@@ -84,7 +94,6 @@ public:
         return ptr->data;
     }
 
-    ////////////////////////
     void set(const T& item, int index) {
         if (index < 0 || index >= this->count)
         {
@@ -98,8 +107,6 @@ public:
         }
         node->data = item;
     }
-    //////////////////////////////////////////////
-
 
     LinkedList<T>* getSubList(int startIndex, int endIndex)
     {

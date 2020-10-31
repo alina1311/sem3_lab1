@@ -18,6 +18,12 @@ public:
         list = new LinkedList<T>(*sequence.list);
     }
 
+    ListSequence(int size)
+    {
+        this->list = new LinkedList<T>(size);
+        this->size = size;
+    }
+
     ListSequence(T* items, int count)
     {
         list = new LinkedList<T>(items, count);
@@ -62,12 +68,12 @@ public:
 
         return newSequence;
     }
-    ////////////////////
+  
     virtual void set(const T& item, int index) override 
     {
         this->list->set(item, index);
     }
-    ////////////////////
+
     virtual void append(T value) override
     {
         list->append(value);

@@ -51,12 +51,10 @@ public:
         return array->get(index);
     }
 
-    ////////////
     virtual void set(const T& item, int index) override 
     {
         this->array->set(item, index);
     }
-    /////////////
 
     virtual int getLength() override
     {

@@ -7,7 +7,7 @@
 
 
 template <class T>
-void PrintSequence(ArraySequence<T>* seq)
+void PrintSequence(Sequence<T>* seq)
 {
     int size = seq->getLength();
     for (int i = 0; i < size; i++)
@@ -29,21 +29,39 @@ void showMenu()
     std::cout << ("0 - Exit") << std::endl;
     std::cout << ("==============================================\n");
 }
-
 //==================================================================================================//
-
-void processAutomaticCheck()
+void RealizationSequence()
 {
-    ArraySequence<int>* seq;
-    int size;
-    std::cout << ("Enter count of elements: ");
-    std::cin >> size;
-    seq = new ArraySequence<int>(size);
+    std::cout << ("Choose a way to realization the sequence:") << std::endl;
+    std::cout << ("1 - Based on list") << std::endl;
+    std::cout << ("2 - Based on dynamic array") << std::endl;
+}
+
+template<class T>
+Sequence<T>* createArraySequence(int size)
+{
+    auto result = new ArraySequence<T>(size);
     for (int i = 0; i < size; i++)
     {
-        seq->set(rand(), i);
+        result->set(rand(), i);
     }
+    return result;
+}
 
+template<class T>
+Sequence<T>* createListSequence(int size)
+{
+    auto result = new ListSequence<T>(size);
+    for (int i = 0; i < size; i++)
+    {
+        result->set(rand(), i);
+    }
+    return result;
+}
+
+template<class T>
+void Automatic(Sequence<T>* seq)
+{
     std::cout << ("Choose a sorting algorithm:") << std::endl;
     std::cout << ("1 - Bubble Sort") << std::endl;
     std::cout << ("2 - Shell Sort") << std::endl;
@@ -57,9 +75,9 @@ void processAutomaticCheck()
     }
     else
     {
-       // std::cout << ("Sequence: ");
-       // PrintSequence(seq);
-       // std::cout << std::endl;
+        // std::cout << ("Sequence: ");
+        // PrintSequence(seq);
+        // std::cout << std::endl;
 
         if (choice == 1)
         {
@@ -117,8 +135,89 @@ void processAutomaticCheck()
         }
     }
 }
+void processAutomaticCheck()
+{
+    int size;
+    int choose = 0;
+    RealizationSequence();
+    std::cout << ("Enter choise: ");
+    std::cin >> choose;
+    if (choose < 1 || choose > 2)
+    {
+        std::cout << ("Incorrect command") << std::endl;
+    }
+    else
+    {
+        std::cout << ("Enter count of elements: ");
+        std::cin >> size;
+        Sequence<int>* seq;
+        if (choose == 1)
+        {
+            seq = createListSequence<int>(size);
+            Automatic(seq);
+        }
+        if (choose == 2)
+        {
+            seq = createArraySequence<int>(size);
+            Automatic(seq);
+        }
+    }
+}
+//==================================================================================================//
+template<class T>
+Sequence<T>* enterArraySequence(int size)
+{
+    auto result = new ArraySequence<T>(size);
+    std::cout << ("Enter elements: ") << std::endl;
+    for (int i = 0; i < size; i++)
+    {
+        int elem;
+        std::cin >> elem;
+        result->set(elem, i);
+    }
+    return result;
+}
+template<class T>
+Sequence<T>* enterListSequence(int size)
+{
+    auto result = new ArraySequence<T>(size);
+    std::cout << ("Enter elements: ") << std::endl;
+    for (int i = 0; i < size; i++)
+    {
+        int elem;
+        std::cin >> elem;
+        result->set(elem, i);
+    }
+    return result;
+}
+template<class T>
+Sequence<T>* enterCorrectArraySequence(int size)
+{
+    auto result = new ArraySequence<T>(size);
+    std::cout << ("Enter correct sequence: ") << std::endl;
+    for (int i = 0; i < size; i++)
+    {
+        int elem;
+        std::cin >> elem;
+        result->set(elem, i);
+    }
+    return result;
+}
+template<class T>
+Sequence<T>* enterCorrectListSequence(int size)
+{
+    auto result = new ArraySequence<T>(size);
+    std::cout << ("Enter correct sequence: ") << std::endl;
+    for (int i = 0; i < size; i++)
+    {
+        int elem;
+        std::cin >> elem;
+        result->set(elem, i);
+    }
+    return result;
+}
 
-void processManualCheck()
+void Manual(Sequence<int>* seq, Sequence<int>* CorrectSeq, int size)
 {
     std::cout << ("Choose a sorting algorithm:") << std::endl;
     std::cout << ("1 - Bubble Sort") << std::endl;
@@ -133,31 +232,6 @@ void processManualCheck()
     }
     else
     {
-
-        ArraySequence<int>* seq;
-        ArraySequence<int>* CorrectSeq;
-        int size;
-        std::cout << ("Enter count of elements: ");
-        std::cin >> size;
-
-        seq = new ArraySequence<int>(size);
-        CorrectSeq = new ArraySequence<int>(size);
-
-        std::cout << ("Enter elements: ") << std::endl;
-        for (int i = 0; i < size; i++)
-        {
-            int elem;
-            std::cin >> elem;
-            seq->set(elem, i);
-        }
-        std::cout << ("Enter correct sequence: ") << std::endl;
-        for (int i = 0; i < size; i++)
-        {
-            int elem;
-            std::cin >> elem;
-            CorrectSeq->set(elem, i);
-        }
-
         std::cout << ("Sequence: ");
         PrintSequence(seq);
         std::cout << std::endl;
@@ -242,8 +316,43 @@ void processManualCheck()
     }
 }
 
-void processComparing()
+void processManualCheck()
 {
+    Sequence<int>* seq;
+    Sequence<int>* CorrectSeq;
+    int size;
+    int choose = 0;
+    RealizationSequence();
+    std::cout << ("Enter choise: ");
+    std::cin >> choose;
+    if (choose < 1 || choose > 2)
+    {
+        std::cout << ("Incorrect command") << std::endl;
+    }
+    else
+    {
+        std::cout << ("Enter count of elements: ");
+        std::cin >> size;
+
+        if (choose == 1)
+        {
+            seq = enterListSequence<int>(size);
+            CorrectSeq = enterCorrectListSequence<int>(size);
+            Manual(seq, CorrectSeq, size);
+        }
+        if (choose == 2)
+        {
+            seq = enterArraySequence<int>(size);
+            CorrectSeq = enterCorrectArraySequence<int>(size);
+            Manual(seq, CorrectSeq, size);
+        }
+    }
+}
+//==================================================================================================//
+template<class T>
+void Comparing(Sequence<T>* seq)
+{
+
     std::cout << ("Choose a comparing algorithms:") << std::endl;
     std::cout << ("1 - Bubble Sort") << std::endl;
     std::cout << ("2 - Shell Sort") << std::endl;
@@ -259,21 +368,11 @@ void processComparing()
     }
     else
     {
-        ArraySequence<int>* seq;
-        int size;
-        std::cout << ("Enter count of elements: ");
-        std::cin >> size;
-        seq = new ArraySequence<int>(size);
-        for (int i = 0; i < size; i++)
-        {
-            seq->set(rand(), i);
-        }
-
         //std::cout << ("Sequence: ");
         //PrintSequence(seq);
         //std::cout << std::endl;
 
-        if (choice1 == 1 && choice2 == 2) 
+        if (choice1 == 1 && choice2 == 2)
         {
             double time1 = Timing(seq, BubbleSort);
             double time2 = Timing(seq, ShellSort);
@@ -368,6 +467,35 @@ void processComparing()
     }
 }
 
+void processComparing()
+{
+    Sequence<int>* seq;
+    int size;
+    int choose = 0;
+    RealizationSequence();
+    std::cout << ("Enter choise: ");
+    std::cin >> choose;
+    if (choose < 1 || choose > 2)
+    {
+        std::cout << ("Incorrect command") << std::endl;
+    }
+    else
+    {
+        std::cout << ("Enter count of elements: ");
+        std::cin >> size;
+        if (choose == 1)
+        {
+            seq = createListSequence<int>(size);
+            Comparing(seq);
+        }
+        if (choose == 2)
+        {
+            seq = createArraySequence<int>(size);
+            Comparing(seq);
+        }
+    }
+}
+//==================================================================================================//
 int main()
 {
     std::cout << "Hello!" << std::endl;

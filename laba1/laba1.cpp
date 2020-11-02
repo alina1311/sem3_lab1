@@ -37,6 +37,14 @@ void RealizationSequence()
     std::cout << ("2 - Based on dynamic array") << std::endl;
 }
 
+void ChooseSortingAlg()
+{
+    std::cout << ("Choose a sorting algorithm:") << std::endl;
+    std::cout << ("1 - Bubble Sort") << std::endl;
+    std::cout << ("2 - Shell Sort") << std::endl;
+    std::cout << ("3 - Quick Sort") << std::endl;
+}
+
 template<class T>
 Sequence<T>* createArraySequence(int size)
 {
@@ -60,12 +68,22 @@ Sequence<T>* createListSequence(int size)
 }
 
 template<class T>
+void Correct(Sequence<T>* seq)
+{
+    if (CorrectSorted(seq) == true)
+    {
+        std::cout << ("Correct") << std::endl;
+    }
+    else
+    {
+        std::cout << ("Incorrect") << std::endl;
+    }
+}
+
+template<class T>
 void Automatic(Sequence<T>* seq)
 {
-    std::cout << ("Choose a sorting algorithm:") << std::endl;
-    std::cout << ("1 - Bubble Sort") << std::endl;
-    std::cout << ("2 - Shell Sort") << std::endl;
-    std::cout << ("3 - Quick Sort") << std::endl;
+    ChooseSortingAlg();
 
     int choice = 0;
     std::cin >> choice;
@@ -82,56 +100,19 @@ void Automatic(Sequence<T>* seq)
         if (choice == 1)
         {
             BubbleSort(seq);
-
-            //std::cout << ("Sorted sequence: ");
-            //PrintSequence(seq);
-            //std::cout << std::endl;
-
-            if (CorrectSorted(seq) == true)
-            {
-                std::cout << ("Correct") << std::endl;
-            }
-            else
-            {
-                std::cout << ("Incorrect") << std::endl;
-            }
+            Correct(seq);
         }
-
 
         if (choice == 2)
         {
             ShellSort(seq);
-
-            //std::cout << ("Sorted sequence: ");
-            //PrintSequence(seq);
-            //std::cout << std::endl;
-
-            if (CorrectSorted(seq) == true)
-            {
-                std::cout << ("Correct") << std::endl;
-            }
-            else
-            {
-                std::cout << ("Incorrect") << std::endl;
-            }
+            Correct(seq);
         }
 
         if (choice == 3)
         {
             QuickSort(seq);
-
-            //std::cout << ("Sorted sequence: ");
-            //PrintSequence(seq);
-            //std::cout << std::endl;
-
-            if (CorrectSorted(seq) == true)
-            {
-                std::cout << ("Correct") << std::endl;
-            }
-            else
-            {
-                std::cout << ("Incorrect") << std::endl;
-            }
+            Correct(seq);
         }
     }
 }
@@ -165,16 +146,22 @@ void processAutomaticCheck()
 }
 //==================================================================================================//
 template<class T>
-Sequence<T>* enterArraySequence(int size)
+void EnterElements(int size, Sequence<T>* result)
 {
-    auto result = new ArraySequence<T>(size);
-    std::cout << ("Enter elements: ") << std::endl;
     for (int i = 0; i < size; i++)
     {
         int elem;
         std::cin >> elem;
         result->set(elem, i);
     }
+}
+
+template<class T>
+Sequence<T>* enterArraySequence(int size)
+{
+    auto result = new ArraySequence<T>(size);
+    std::cout << ("Enter elements: ") << std::endl;
+    EnterElements(size, result);
     return result;
 }
 template<class T>
@@ -182,12 +169,7 @@ Sequence<T>* enterListSequence(int size)
 {
     auto result = new ArraySequence<T>(size);
     std::cout << ("Enter elements: ") << std::endl;
-    for (int i = 0; i < size; i++)
-    {
-        int elem;
-        std::cin >> elem;
-        result->set(elem, i);
-    }
+    EnterElements(size, result);
     return result;
 }
 template<class T>
@@ -195,35 +177,48 @@ Sequence<T>* enterCorrectArraySequence(int size)
 {
     auto result = new ArraySequence<T>(size);
     std::cout << ("Enter correct sequence: ") << std::endl;
-    for (int i = 0; i < size; i++)
-    {
-        int elem;
-        std::cin >> elem;
-        result->set(elem, i);
-    }
+    EnterElements(size, result);
     return result;
 }
+
 template<class T>
 Sequence<T>* enterCorrectListSequence(int size)
 {
     auto result = new ArraySequence<T>(size);
     std::cout << ("Enter correct sequence: ") << std::endl;
-    for (int i = 0; i < size; i++)
-    {
-        int elem;
-        std::cin >> elem;
-        result->set(elem, i);
-    }
+    EnterElements(size, result);
     return result;
+}
+
+void Manual_Correct(Sequence<int>* seq, Sequence<int>* CorrectSeq, int size)
+{
+    std::cout << ("Sorted sequence: ");
+    PrintSequence(seq);
+    std::cout << std::endl;
+    std::cout << ("Correct sorted sequence: ");
+    PrintSequence(CorrectSeq);
+    std::cout << std::endl;
+
+    int k = 0;
+    while (k < size)
+    {
+        if (seq->get(k) == CorrectSeq->get(k))
+        {
+            k++;
+        }
+        else
+        {
+            std::cout << ("Incorrect") << std::endl;
+            break;
+        }
+    }
+    std::cout << ("Correct") << std::endl;
 }
 
 void Manual(Sequence<int>* seq, Sequence<int>* CorrectSeq, int size)
 {
-    std::cout << ("Choose a sorting algorithm:") << std::endl;
-    std::cout << ("1 - Bubble Sort") << std::endl;
-    std::cout << ("2 - Shell Sort") << std::endl;
-    std::cout << ("3 - Quick Sort") << std::endl;
-
+    ChooseSortingAlg();
+    
     int choice = 0;
     std::cin >> choice;
     if (choice < 1 || choice > 3)
@@ -239,79 +234,19 @@ void Manual(Sequence<int>* seq, Sequence<int>* CorrectSeq, int size)
         if (choice == 1)
         {
             BubbleSort(seq);
-            std::cout << ("Sorted sequence: ");
-            PrintSequence(seq);
-            std::cout << std::endl;
-            std::cout << ("Correct sorted sequence: ");
-            PrintSequence(CorrectSeq);
-            std::cout << std::endl;
-
-            int k = 0;
-            while (k < size)
-            {
-                if (seq->get(k) == CorrectSeq->get(k))
-                {
-                    k++;
-                }
-                else
-                {
-                    std::cout << ("Incorrect") << std::endl;
-                    break;
-                }
-            }
-            std::cout << ("Correct") << std::endl;
+            Manual_Correct(seq, CorrectSeq, size);
         }
 
         if (choice == 2)
         {
             ShellSort(seq);
-            std::cout << ("Sorted sequence: ");
-            PrintSequence(seq);
-            std::cout << std::endl;
-            std::cout << ("Correct sorted sequence: ");
-            PrintSequence(CorrectSeq);
-            std::cout << std::endl;
-
-            int k = 0;
-            while (k < size)
-            {
-                if (seq->get(k) == CorrectSeq->get(k))
-                {
-                    k++;
-                }
-                else
-                {
-                    std::cout << ("Incorrect") << std::endl;
-                    break;
-                }
-            }
-            std::cout << ("Correct") << std::endl;
+            Manual_Correct(seq, CorrectSeq, size);
         }
 
         if (choice == 3)
         {
             QuickSort(seq);
-            std::cout << ("Sorted sequence: ");
-            PrintSequence(seq);
-            std::cout << std::endl;
-            std::cout << ("Correct sorted sequence: ");
-            PrintSequence(CorrectSeq);
-            std::cout << std::endl;
-
-            int k = 0;
-            while (k < size)
-            {
-                if (seq->get(k) == CorrectSeq->get(k))
-                {
-                    k++;
-                }
-                else
-                {
-                    std::cout << ("Incorrect") << std::endl;
-                    break;
-                }
-            }
-            std::cout << ("Correct") << std::endl;
+            Manual_Correct(seq, CorrectSeq, size);
         }
     }
 }
@@ -352,11 +287,7 @@ void processManualCheck()
 template<class T>
 void Comparing(Sequence<T>* seq)
 {
-
-    std::cout << ("Choose a comparing algorithms:") << std::endl;
-    std::cout << ("1 - Bubble Sort") << std::endl;
-    std::cout << ("2 - Shell Sort") << std::endl;
-    std::cout << ("3 - Quick Sort") << std::endl;
+    ChooseSortingAlg();
 
     int choice1 = 0;
     std::cin >> choice1;

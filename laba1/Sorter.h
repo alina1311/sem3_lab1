@@ -119,7 +119,7 @@ double Timing(Sequence<T>* seq, void (*sort)(Sequence<T>* seq))
 }
 
 template <class T>
-bool CorrectSorted(Sequence<T>* seq)
+bool CheckIsSorted(Sequence<T>* seq)
 {
     int size = seq->getLength();
     int i = 1;

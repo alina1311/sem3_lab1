@@ -32,14 +32,14 @@ void showMenu()
 //==================================================================================================//
 void RealizationSequence()
 {
-    std::cout << ("Choose a way to realization the sequence:") << std::endl;
+    std::cout << ("Choose the sequence implementation:") << std::endl;
     std::cout << ("1 - Based on list") << std::endl;
     std::cout << ("2 - Based on dynamic array") << std::endl;
 }
 
 void ChooseSortingAlg()
 {
-    std::cout << ("Choose a sorting algorithm:") << std::endl;
+    std::cout << ("Choose the sorting algorithm:") << std::endl;
     std::cout << ("1 - Bubble Sort") << std::endl;
     std::cout << ("2 - Shell Sort") << std::endl;
     std::cout << ("3 - Quick Sort") << std::endl;
@@ -68,9 +68,9 @@ Sequence<T>* createListSequence(int size)
 }
 
 template<class T>
-void Correct(Sequence<T>* seq)
+void CheckIsCorrectAndPrint(Sequence<T>* seq)
 {
-    if (CorrectSorted(seq) == true)
+    if (CheckIsSorted(seq) == true)
     {
         std::cout << ("Correct") << std::endl;
     }
@@ -100,19 +100,19 @@ void Automatic(Sequence<T>* seq)
         if (choice == 1)
         {
             BubbleSort(seq);
-            Correct(seq);
+            CheckIsCorrectAndPrint(seq);
         }
 
         if (choice == 2)
         {
             ShellSort(seq);
-            Correct(seq);
+            CheckIsCorrectAndPrint(seq);
         }
 
         if (choice == 3)
         {
             QuickSort(seq);
-            Correct(seq);
+            CheckIsCorrectAndPrint(seq);
         }
     }
 }
